@@ -1,0 +1,577 @@
+@import 'tailwindcss';
+
+* {
+  padding: 0;
+  margin: 0;
+  font-family: 'Inter', sans-serif;
+  box-sizing: border-box;
+}
+
+button {
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+}
+
+body {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  min-height: 100vh;
+  font-family: 'Inter', sans-serif;
+}
+
+/* Modern Design System */
+:root {
+  --primary-color: #6366f1;
+  --primary-dark: #4f46e5;
+  --primary-light: #818cf8;
+  --secondary-color: #10b981;
+  --secondary-dark: #059669;
+  --accent-color: #f59e0b;
+  --accent-dark: #d97706;
+  --success-color: #10b981;
+  --warning-color: #f59e0b;
+  --error-color: #ef4444;
+  --text-primary: #1f2937;
+  --text-secondary: #6b7280;
+  --text-light: #9ca3af;
+  --bg-primary: #ffffff;
+  --bg-secondary: #f9fafb;
+  --bg-dark: #1f2937;
+  --border-color: #e5e7eb;
+  --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+  --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+  --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+  --shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
+}
+
+/* Auth Forms */
+.register-contaitner, .signin-container {
+  width: 100vw;
+  height: 100vh;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.register-contaitner::before, .signin-container::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  opacity: 0.1;
+  z-index: 1;
+}
+
+.register-form, .signin-form {
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(20px);
+  border-radius: 24px;
+  padding: 48px 40px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  width: 480px;
+  box-shadow: var(--shadow-xl);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  position: relative;
+  z-index: 2;
+}
+
+.register-form h2, .signin-form h2 {
+  color: var(--text-primary);
+  font-size: 28px;
+  font-weight: 700;
+  text-align: center;
+  margin-bottom: 8px;
+}
+
+.register-form p, .signin-form p {
+  color: var(--text-secondary);
+  text-align: center;
+  font-size: 14px;
+  margin-bottom: 24px;
+}
+
+label {
+  color: var(--text-primary);
+  font-weight: 600;
+  font-size: 14px;
+  margin-bottom: 4px;
+}
+
+input::placeholder {
+  color: var(--text-light);
+  font-size: 14px;
+}
+
+input {
+  color: var(--text-primary);
+  border: 2px solid var(--border-color);
+  padding: 12px 16px;
+  border-radius: 12px;
+  font-size: 14px;
+  width: 100%;
+  background: var(--bg-primary);
+  transition: all 0.2s ease-in-out;
+}
+
+input:focus {
+  outline: none;
+  border-color: var(--primary-color);
+  box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
+}
+
+textarea {
+  color: var(--text-primary);
+  border: 2px solid var(--border-color);
+  padding: 12px 16px;
+  border-radius: 12px;
+  font-size: 14px;
+  width: 100%;
+  background: var(--bg-primary);
+  resize: vertical;
+  min-height: 100px;
+  transition: all 0.2s ease-in-out;
+}
+
+textarea:focus {
+  outline: none;
+  border-color: var(--primary-color);
+  box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
+}
+
+.register-button, .signin-button {
+  margin-top: 8px;
+  color: white;
+  background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-dark) 100%);
+  padding: 14px 0;
+  border-radius: 12px;
+  font-weight: 600;
+  font-size: 16px;
+  border: none;
+  transition: all 0.2s ease-in-out;
+  box-shadow: var(--shadow-md);
+}
+
+.register-button:hover, .signin-button:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-lg);
+  background: linear-gradient(135deg, var(--primary-dark) 0%, #4338ca 100%);
+}
+
+.register-button:active, .signin-button:active {
+  transform: translateY(0);
+}
+
+.register-button:disabled, .signin-button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none;
+}
+
+/* File input styling */
+input[type="file"] {
+  padding: 8px;
+  border: 2px dashed var(--border-color);
+  background: var(--bg-secondary);
+  cursor: pointer;
+}
+
+input[type="file"]:hover {
+  border-color: var(--primary-color);
+  background: rgba(99, 102, 241, 0.05);
+}
+
+/* Password toggle button */
+.show-hide-btn {
+  background: none;
+  border: none;
+  color: var(--text-secondary);
+  padding: 8px;
+  border-radius: 8px;
+  transition: all 0.2s ease-in-out;
+}
+
+.show-hide-btn:hover {
+  background: var(--bg-secondary);
+  color: var(--text-primary);
+}
+
+/* Link styling */
+.register-form a, .signin-form a {
+  color: var(--primary-color);
+  text-decoration: none;
+  font-weight: 500;
+  transition: all 0.2s ease-in-out;
+}
+
+.register-form a:hover, .signin-form a:hover {
+  color: var(--primary-dark);
+  text-decoration: underline;
+}
+
+/* Book Components */
+.add-book-btn {
+  background: linear-gradient(135deg, var(--secondary-color) 0%, var(--secondary-dark) 100%);
+  color: white;
+  padding: 12px 24px;
+  border-radius: 12px;
+  font-weight: 600;
+  border: none;
+  box-shadow: var(--shadow-md);
+  transition: all 0.2s ease-in-out;
+}
+
+.add-book-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-lg);
+  background: linear-gradient(135deg, var(--secondary-dark) 0%, #047857 100%);
+}
+
+.book-container {
+  width: 280px;
+  height: 380px;
+  border-radius: 20px;
+  position: relative;
+  transition: all 0.3s ease-in-out;
+  overflow: hidden;
+  box-shadow: var(--shadow-md);
+}
+
+.book-container:hover {
+  transform: translateY(-8px) scale(1.02);
+  box-shadow: var(--shadow-xl);
+}
+
+.book-image {
+  position: relative;
+  z-index: 3;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.book-overlay {
+  position: absolute;
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.8) 0%, rgba(0, 0, 0, 0.2) 50%, transparent 100%);
+  border-radius: 20px;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 4;
+}
+
+.book-text-container {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 24px 20px 20px;
+  z-index: 5;
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.9) 0%, rgba(0, 0, 0, 0.6) 50%, transparent 100%);
+  border-radius: 0 0 20px 20px;
+}
+
+.book-text-container p {
+  margin: 0 0 8px 0;
+  color: white;
+}
+
+.book-title {
+  font-size: 18px;
+  font-weight: 700;
+  margin-bottom: 4px;
+}
+
+.book-author {
+  font-size: 14px;
+  color: #e5e7eb;
+  font-style: italic;
+  margin-bottom: 12px;
+}
+
+.book-stats {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+
+.availability-badge {
+  display: inline-block;
+  padding: 4px 12px;
+  background: var(--success-color);
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 600;
+  color: white;
+}
+
+.rating-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 4px 12px;
+  background: var(--accent-color);
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 600;
+  color: white;
+}
+
+.rating-icon {
+  font-size: 10px;
+}
+
+.borrow-button {
+  width: 100%;
+  background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-dark) 100%);
+  color: white;
+  padding: 12px;
+  border-radius: 12px;
+  font-weight: 600;
+  border: none;
+  transition: all 0.2s ease-in-out;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.borrow-button:hover:not(:disabled) {
+  background: linear-gradient(135deg, var(--primary-dark) 0%, #4338ca 100%);
+  transform: translateY(-2px);
+}
+
+.borrow-button:disabled {
+  background: var(--text-light);
+  cursor: not-allowed;
+  transform: none;
+}
+
+/* Action buttons */
+.edit-btn {
+  background: linear-gradient(135deg, var(--accent-color) 0%, var(--accent-dark) 100%);
+  color: white;
+  padding: 8px 16px;
+  border-radius: 12px;
+  font-weight: 600;
+  border: none;
+  margin-right: 8px;
+  transition: all 0.2s ease-in-out;
+}
+
+.edit-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+}
+
+.dlt-btn {
+  background: linear-gradient(135deg, var(--error-color) 0%, #dc2626 100%);
+  color: white;
+  padding: 8px 16px;
+  border-radius: 12px;
+  font-weight: 600;
+  border: none;
+  transition: all 0.2s ease-in-out;
+}
+
+.dlt-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+}
+
+/* Search bar */
+.search-bar {
+  width: 100%;
+  max-width: 600px;
+  border-radius: 24px;
+  padding: 16px 20px 16px 48px;
+  border: 2px solid var(--border-color);
+  background: var(--bg-primary);
+  font-size: 16px;
+  transition: all 0.2s ease-in-out;
+}
+
+.search-bar:focus {
+  outline: none;
+  border-color: var(--primary-color);
+  box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
+}
+
+/* Popular books */
+.popular-book {
+  width: 200px;
+  height: 280px;
+  border-radius: 16px;
+  position: relative;
+  overflow: hidden;
+  cursor: pointer;
+  transition: all 0.3s ease-in-out;
+  box-shadow: var(--shadow-md);
+}
+
+.popular-book:hover {
+  transform: translateY(-8px) scale(1.05);
+  box-shadow: var(--shadow-xl);
+}
+
+.popular-book img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.overlay {
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.8) 0%, rgba(0, 0, 0, 0.2) 50%, transparent 100%);
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+  border-radius: 16px;
+}
+
+.details-text {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 20px 16px 16px;
+  z-index: 2;
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.9) 0%, rgba(0, 0, 0, 0.6) 50%, transparent 100%);
+  border-radius: 0 0 16px 16px;
+}
+
+.details-text p {
+  margin: 0 0 4px 0;
+  color: white;
+}
+
+.details-text p:first-child {
+  font-size: 16px;
+  font-weight: 700;
+}
+
+.details-text p:nth-child(2) {
+  font-size: 12px;
+  color: #e5e7eb;
+  font-style: italic;
+}
+
+.desc-book {
+  font-size: 11px;
+  font-weight: 400;
+  color: #d1d5db;
+  line-height: 1.4;
+  opacity: 0;
+  transform: translateY(10px);
+  transition: all 0.3s ease-in-out;
+  margin-top: 8px;
+}
+
+.popular-book:hover .desc-book {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Dashboard Components */
+.section-header {
+  margin-bottom: 24px;
+}
+
+.section-header h2 {
+  font-size: 24px;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-bottom: 8px;
+}
+
+.section-header p {
+  color: var(--text-secondary);
+  font-size: 14px;
+}
+
+.books-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 24px;
+  margin-bottom: 32px;
+}
+
+.search-section {
+  margin-bottom: 32px;
+}
+
+.no-books-found {
+  text-align: center;
+  padding: 48px 24px;
+  color: var(--text-secondary);
+}
+
+.no-books-icon {
+  font-size: 48px;
+  margin-bottom: 16px;
+  color: var(--text-light);
+}
+
+.no-books-found h3 {
+  font-size: 20px;
+  font-weight: 600;
+  margin-bottom: 8px;
+  color: var(--text-primary);
+}
+
+.no-books-found p {
+  font-size: 14px;
+}
+
+/* Loading spinner */
+.animate-spin {
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+  .register-form, .signin-form {
+    width: 90%;
+    padding: 32px 24px;
+  }
+  
+  .book-container {
+    width: 100%;
+    max-width: 280px;
+  }
+  
+  .search-bar {
+    max-width: 100%;
+  }
+  
+  .books-grid {
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 16px;
+  }
+  
+  .popular-books-grid {
+    gap: 12px;
+  }
+  
+  .popular-book {
+    min-width: 160px;
+    height: 220px;
+  }
+}
