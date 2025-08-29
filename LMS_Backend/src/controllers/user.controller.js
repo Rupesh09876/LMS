@@ -84,9 +84,9 @@ const loginUser = async (req, res) => {
 
         res.cookie('token', token, {
             httpOnly: true,
-            sameSite: 'lax',
+            sameSite: 'none',
             expires: new Date(Date.now() + 3_600_000),
-            secure: false
+            secure: true
         })
 
         return res.status(201).json({
