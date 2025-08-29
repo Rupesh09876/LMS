@@ -188,7 +188,7 @@ const BorrowedBook = () => {
                   <div className='flex gap-6'>
                     <div className='flex-shrink-0'>
                       <img 
-                        src={`http://localhost:3000/${book.book.bookImage}`} 
+                        src={`https://lms-g2f1.onrender.com/${book.book.bookImage}`} 
                         alt={book.book.title} 
                         className='w-48 h-64 object-cover rounded-16 shadow-md'
                       />
@@ -287,7 +287,7 @@ const BorrowedBook = () => {
                 <div key={book._id} className='bg-bg-secondary rounded-12 p-4 border border-border-color'>
                   <div className='flex items-center gap-4'>
                     <img 
-                      src={`http://localhost:3000/${book.book.bookImage}`} 
+                      src={`https://lms-g2f1.onrender.com/${book.book.bookImage}`} 
                       alt={book.book.title} 
                       className='w-16 h-20 object-cover rounded-8'
                     />

@@ -25,7 +25,7 @@ const Profile = () => {
 
 
   const fetchUser = async () => {
-    const res = await axios.get('http://localhost:3000/api/user/getUser', {withCredentials: true})
+    const res = await axios.get('https://lms-g2f1.onrender.com/api/user/getUser', {withCredentials: true})
     setUserDetail(res.data.data)
     // setProfileImage(res.data.data.profileImage)
     setFormData({
@@ -75,7 +75,7 @@ const Profile = () => {
         <p className='font-bold text-2xl'>Profile</p>
         <form onSubmit={handleUpdate} encType='multipart/form-data' style={{alignSelf: 'center'}} className='w-[500px] flex flex-col items-center gap-[12px]'>
           <div className='flex flex-col gap-[4px] items-center'>
-            <img src={`http://localhost:3000/${formData.profileImage}`} alt="Profile Pic" className='h-[100px] w-[100px] border-1 rounded-full' />
+            <img src={`https://lms-g2f1.onrender.com/${formData.profileImage}`} alt="Profile Pic" className='h-[100px] w-[100px] border-1 rounded-full' />
             <label htmlFor="pp">
               <span className='flex gap-[8px] items-center'>Edit profile picture <FaPen/></span>
               <input type="file" name="profileImage" onChange={handleChange} id='pp' hidden />

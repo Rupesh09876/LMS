@@ -1,6 +1,6 @@
 import axios from 'axios'
 
-const res = await axios.get('http://localhost:3000/api/process/get', {withCredentials: true})
+const res = await axios.get('https://lms-g2f1.onrender.com/api/process/get', {withCredentials: true})
 const borrowed = res.data.data
 
 const borrowBook = borrowed.filter(item => item.isReturned === false).length

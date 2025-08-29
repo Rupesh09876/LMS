@@ -175,7 +175,7 @@ const ReturnBorrow = () => {
                   <tr key={borrow._id}>
                     <td>
                       <img 
-                        src={`http://localhost:3000/${borrow.user.profileImage}`} 
+                        src={`https://lms-g2f1.onrender.com/${borrow.user.profileImage}`} 
                         className='table-avatar' 
                         alt={borrow.user.name} 
                       />

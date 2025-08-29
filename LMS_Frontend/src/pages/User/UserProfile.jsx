@@ -207,7 +207,7 @@ const UserProfile = () => {
               <div className='profile-header'>
                 <div className='profile-avatar'>
                   <img 
-                    src={previewImage || (formData.profileImage ? `http://localhost:3000/${formData.profileImage}` : '/default-avatar.png')} 
+                    src={previewImage || (formData.profileImage ? `https://lms-g2f1.onrender.com/${formData.profileImage}` : '/default-avatar.png')} 
                     alt="Profile Picture" 
                     className='profile-image'
                     onError={(e) => {

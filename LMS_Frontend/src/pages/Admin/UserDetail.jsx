@@ -219,7 +219,7 @@ const UserDetail = () => {
                   <tr key={user._id}>
                     <td>
                       <img 
-                        src={`http://localhost:3000/${user.profileImage}`} 
+                        src={`https://lms-g2f1.onrender.com/${user.profileImage}`} 
                         alt={user.name} 
                         className='table-avatar'
                       />

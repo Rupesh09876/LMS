@@ -25,7 +25,7 @@ const Feedback = () => {
                 .map(feedback => {
                     return <div style={{borderBottom: '0.5px solid gray', margin: '12px 0'}}>
                         <div className='flex gap-[12px] items-center'>
-                            <img src={`http://localhost:3000/${feedback.profileImage}`} className='w-[50px] h-[50px] rounded-full' alt="profile" />
+                            <img src={`https://lms-g2f1.onrender.com/${feedback.profileImage}`} className='w-[50px] h-[50px] rounded-full' alt="profile" />
                             <div className='flex flex-col'>
                                 <p className='font-bold'>{feedback.name}</p>
                                 <p className='text-[14px] text-neutral-400'>{feedback.email}</p>

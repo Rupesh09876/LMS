@@ -21,7 +21,7 @@ const Sidebar = () => {
   
   const handleLogout = async() => {
     try {
-      const res = await axios.post('http://localhost:3000/api/auth/logout', {}, {withCredentials: true})
+      const res = await axios.post('https://lms-g2f1.onrender.com/api/auth/logout', {}, {withCredentials: true})
       Cookies.remove('token')
       Cookies.remove('user')
       toast.success('Successfully logged out. See you soon!', {

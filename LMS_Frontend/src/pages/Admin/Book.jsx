@@ -350,7 +350,7 @@ const Book = () => {
               .map((book) => (
                 <div key={book._id} className='book-container'>
                   <img 
-                    src={`http://localhost:3000/${book.bookImage}`} 
+                    src={`https://lms-g2f1.onrender.com/${book.bookImage}`} 
                     alt={book.title} 
                     className='book-image'
                   />
