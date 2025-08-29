@@ -22,7 +22,7 @@ app.use(cors({
     origin: (origin, callback) => {
         const allowedOrigins = [
             'http://localhost:5173', // local frontend
-            'https://lms-tl38.vercel.app/' // production frontend
+            'https://lms-tl38.vercel.app' // production frontend
         ];
 
         // Allow requests with no origin (like Postman) or allowed origins
