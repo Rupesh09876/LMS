@@ -1,6 +1,6 @@
 import * as ImagePicker from "expo-image-picker";
 import * as Location from "expo-location";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Image,
   ScrollView,
@@ -9,7 +9,10 @@ import {
   TouchableOpacity,
   View,
   Alert,
+  ActivityIndicator,
 } from "react-native";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import axios from "axios";
 
 interface CapturedItem {
   uri: string;
@@ -19,11 +22,45 @@ interface CapturedItem {
 export default function Profile() {
   const [items, setItems] = useState<CapturedItem[]>([]);
   const [profilePic, setProfilePic] = useState<string | null>(null);
-  const [name, setName] = useState("John Doe");
-  const [email, setEmail] = useState("johndoe@example.com");
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
   const [birthDate, setBirthDate] = useState("");
   const [gender, setGender] = useState<"Male" | "Female" | "Other" | "">("");
   const [description, setDescription] = useState("");
+  const [loading, setLoading] = useState(true);
+
+  // Fetch user data from backend or AsyncStorage
+  const fetchUserProfile = async () => {
+    try {
+      const token = await AsyncStorage.getItem("token");
+      if (!token) {
+        Alert.alert("Error", "User not logged in");
+        setLoading(false);
+        return;
+      }
+
+      const res = await axios.get("https://lms-g2f1.onrender.com/api/user/me", {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+
+      const user = res.data.user;
+      setName(user.name);
+      setEmail(user.email);
+      setProfilePic(user.profileImage || null);
+      setBirthDate(user.birthDate || "");
+      setGender(user.gender || "");
+      setDescription(user.description || "");
+    } catch (err: any) {
+      console.log(err);
+      Alert.alert("Error", "Failed to fetch user profile");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    fetchUserProfile();
+  }, []);
 
   const pickProfileImage = async () => {
     const permission = await ImagePicker.requestMediaLibraryPermissionsAsync();
@@ -72,6 +109,54 @@ export default function Profile() {
     }
   };
 
+  const updateProfile = async () => {
+    try {
+      setLoading(true);
+      const token = await AsyncStorage.getItem("token");
+      if (!token) return;
+
+      const data = new FormData();
+      data.append("name", name);
+      data.append("birthDate", birthDate);
+      data.append("gender", gender);
+      data.append("description", description);
+
+      if (profilePic && !profilePic.startsWith("http")) {
+        data.append("profileImage", {
+          uri: profilePic,
+          name: `profile.${profilePic.split(".").pop()}`,
+          type: "image/jpeg",
+        } as any);
+      }
+
+      const res = await axios.put(
+        "https://lms-g2f1.onrender.com/api/user/update",
+        data,
+        { headers: { Authorization: `Bearer ${token}`, "Content-Type": "multipart/form-data" } }
+      );
+
+      if (res.data.success) {
+        Alert.alert("Success", "Profile updated successfully!");
+        fetchUserProfile(); // refresh profile
+      } else {
+        Alert.alert("Error", res.data.message || "Update failed");
+      }
+    } catch (err: any) {
+      console.log(err);
+      Alert.alert("Error", "Failed to update profile");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  if (loading) {
+    return (
+      <View className="flex-1 justify-center items-center">
+        <ActivityIndicator size="large" color="#3498db" />
+      </View>
+    );
+  }
+
   return (
     <ScrollView className="flex-1 bg-white px-4 pt-8">
       {/* Profile Info */}
@@ -98,9 +183,8 @@ export default function Profile() {
         <TextInput
           className="border border-gray-300 rounded-md w-full p-2 mb-2"
           value={email}
-          onChangeText={setEmail}
+          editable={false}
           placeholder="Email"
-          keyboardType="email-address"
         />
         <TextInput
           className="border border-gray-300 rounded-md w-full p-2 mb-2"
@@ -131,6 +215,15 @@ export default function Profile() {
           placeholder="Write a little description about yourself..."
           multiline
         />
+
+        <TouchableOpacity
+          onPress={updateProfile}
+          className="bg-green-600 py-3 rounded-2xl w-full mt-3"
+        >
+          <Text className="text-white text-center text-lg font-semibold">
+            Update Profile
+          </Text>
+        </TouchableOpacity>
       </View>
 
       {/* Camera & Location */}
