@@ -70,25 +70,7 @@ export default function About() {
         </View>
       </View>
 
-      {/* Meet the Team */}
-      <View className="mb-8">
-        <Text className="text-2xl font-bold text-gray-900 mb-4">Meet the Team</Text>
-        {teamMembers.map((member, index) => (
-          <View
-            key={index}
-            className="flex-row items-center mb-4 bg-gray-50 p-4 rounded-xl shadow"
-          >
-            <Image
-              source={{ uri: member.image }}
-              className="w-16 h-16 rounded-full mr-4"
-            />
-            <View className="flex-1">
-              <Text className="text-lg font-semibold text-gray-900">{member.name}</Text>
-              <Text className="text-gray-700">{member.role}</Text>
-            </View>
-          </View>
-        ))}
-      </View>
+  
     </ScrollView>
   );
 }
