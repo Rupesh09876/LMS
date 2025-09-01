@@ -15,7 +15,7 @@ const fileFilter = (req, file, cb) => {
     if (file.mimetype.startsWith('image/')) {
         cb (null, true)
     } else {
-        cb (new Error('Invalid file format. Only image are allowed'))
+       cb(new Error("❌ Upload failed: Unsupported file type. Please upload a valid image (JPG, PNG, GIF)."));
     }
 }
 

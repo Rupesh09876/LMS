@@ -68,9 +68,9 @@ const seedLibrarian = async () => {
 
       console.log("Default librarian created.");
     }
-  } catch (error) {
-    console.log("Seed data failed", error.message);
-  }
+ } catch (error) {
+  console.error("❌ Failed to seed data:", error.message);
+}
 };
 
 export default app;

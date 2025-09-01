@@ -9,7 +9,7 @@ const borrowBook = async (req, res) => {
         if (!bookId) {
             return res.status(400).json({
                 success: false,
-                message: 'Borrrow: Please provide ID of the book'
+                message: 'Borrow: Book ID is required.'
             })
         }
 
@@ -17,7 +17,7 @@ const borrowBook = async (req, res) => {
         if (!book) {
             return res.status(404).json({
                 success: false,
-                message: 'Borrrow: Book with id not found'
+                message: 'Borrow: Book not found with the provided ID.'
             })
         }
 
@@ -25,7 +25,7 @@ const borrowBook = async (req, res) => {
         if (!user) {
             return res.status(404).json({
                 success: false,
-                message: 'Borrrow: unauthorized user'
+                message: 'Borrow: Unauthorized user.'
             })
         }
 
@@ -33,7 +33,7 @@ const borrowBook = async (req, res) => {
         if (borrowLimit.length >= 3) {
             return res.status(400).json({
                 success: false,
-                message: 'Book cannot be borrowed more than 3'
+                message: 'Borrow limit exceeded. A user cannot borrow more than 3 books at a time.'
             })
         }
 
@@ -47,7 +47,7 @@ const borrowBook = async (req, res) => {
         if (bookBorrowedAlready && bookBorrowedAlready.isReturned === false) {
             return res.status(400).json({
                 success: false,
-                message: 'Book has been already borrowed by user'
+                message: 'This book has already been borrowed by the user.'
             })
         }
 
@@ -58,7 +58,7 @@ const borrowBook = async (req, res) => {
         } else {
             return res.status(400).json({
                 success: false,
-                message: 'Book cannot be borrowed'
+                message: 'This book is currently unavailable for borrowing.'
             })
         }
         const borrowDate = new Date()
@@ -74,14 +74,14 @@ const borrowBook = async (req, res) => {
 
         return res.status(200).json({
             success: true,
-            message: 'Book borrowed successfully',
+            message: 'Book borrowed successfully.',
             data: borrow
         })
 
     } catch (err) {
         return res.status(500).json({
             success: false,
-            message: 'server error while borrowing book',
+            message: 'Server error occurred while borrowing the book.',
             error: err.message
         })
     }
@@ -94,7 +94,7 @@ const returnBook = async (req, res) => {
         if (!returningBook) {
             return res.status(404).json({
                 success: false,
-                message: 'Return: Book with id has not been borrowed'
+                message: 'Return: Borrow record not found with the provided ID.'
             })
         }
 
@@ -102,7 +102,7 @@ const returnBook = async (req, res) => {
         if (!book) {
             return res.status(404).json({
                 success: false,
-                message: 'Return: Book with id not found'
+                message: 'Return: Book not found with the provided ID.'
             })
         }
 
@@ -115,12 +115,12 @@ const returnBook = async (req, res) => {
 
         return res.status(200).json({
             success: true,
-            message: 'Book returned successfully'
+            message: 'Book returned successfully.'
         })
     } catch (err) {
         res.status(500).json({
             success: false,
-            message: 'Server failed while returning books',
+            message: 'Server error occurred while returning the book.',
             error: err.message
         })
     }
@@ -137,13 +137,13 @@ const getBorrowBook = async(req, res) => {
         }
         return res.status(200).json({
             success: true,
-            message: 'Borrowed books fetched',
+            message: 'Borrowed books retrieved successfully.',
             data: borrowedBook
         })
     } catch (error) {
         return res.status(500).json({
             success: false,
-            message: 'Book borrowing failed server crash',
+            message: 'Server error occurred while fetching borrowed books.',
             error: error
         })
     }
@@ -177,13 +177,13 @@ const getBorrowedBookDetails = async (req, res) => {
 
         return res.status(200).json({
             success: true,
-            message: 'All book fetched',
+            message: 'Borrowed book details retrieved successfully.',
             data: borrow
         })
     } catch (error) {
         res.status(500).json({
             success: false,
-            message: 'cannot retrieved borrowed book details',
+            message: 'Server error occurred while retrieving borrowed book details.',
             error: error.message
         })
     }
@@ -196,19 +196,19 @@ const getBorrowedBookById = async (req, res) =>{
         if (!borrowedBook) {
             return res.status(404).json({
                 success: false,
-                message: 'User has not borrowed book'
+                message: 'No borrowed books found for this user.'
             })
         }
 
         return res.status(200).json({
             success: true,
-            message: 'Book fetched by id successfully',
+            message: 'Borrowed books retrieved successfully for the given user ID.',
             data: borrowedBook
         })
     } catch (err) {
         return res.status(500).json({
             success: false,
-            message: 'Server failed in fetching book by id',
+            message: 'Server error occurred while fetching borrowed books by user ID.',
             error: err
         })
     }
@@ -254,13 +254,13 @@ const getBorrowBookByUserID = async (req, res) => {
 
         return res.status(200).json({
             success: true,
-            message: 'book borrowed successfully through email',
+            message: 'Borrowed books retrieved successfully for the given user ID.',
             data: borrow
         })
     } catch (err) {
         return res.status(500).json({
             success: false,
-            message: 'Failed retrieving data through email',
+            message: 'Server error occurred while retrieving borrowed books for the user.',
             error: err
         })
     }
@@ -281,20 +281,20 @@ const renewBook = async(req, res) => {
         if (!borrowedBook) {
             return res.status(404).json({
                 success: false,
-                message: 'Book not found'
+                message: 'Borrow record not found.'
             })
         }
 
         return res.status(200).json({
             success: true,
-            message: 'Renewed successfully'
+            message: 'Book renewed successfully.'
         })
 
     } catch (err) {
         console.log(err)
-        return res.status(200).json({
+        return res.status(500).json({
             success: false,
-            message: 'server failed while renewing book'
+            message: 'Server error occurred while renewing the book.'
         })
     }
 }

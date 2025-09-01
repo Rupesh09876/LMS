@@ -3,11 +3,14 @@ import jwt from 'jsonwebtoken'
 
 const VerifyJWT = async (req, res, next) => {
     try {
-        const token = req.header('Authorization')?.replace('Bearer ', '') || req.cookies?.token
+        const token =
+            req.header('Authorization')?.replace('Bearer ', '') ||
+            req.cookies?.token
+
         if (!token) {
             return res.status(401).json({
                 success: false,
-                message: 'Unauthorized user'
+                message: 'Access denied. No token provided.'
             })
         }
 
@@ -17,7 +20,7 @@ const VerifyJWT = async (req, res, next) => {
         if (!user) {
             return res.status(400).json({
                 success: false,
-                message: 'Invalid token'
+                message: 'Invalid token. User not found.'
             })
         }
 
@@ -26,7 +29,7 @@ const VerifyJWT = async (req, res, next) => {
     } catch (err) {
         return res.status(401).json({
             success: false,
-            message: 'Token expired or not valid'
+            message: 'Authentication failed. Token is invalid or expired.'
         })
     }
 }
@@ -34,9 +37,9 @@ const VerifyJWT = async (req, res, next) => {
 const checkRole = (roles) => {
     return (req, res, next) => {
         if (!roles.includes(req.user.role)) {
-            return res.status(401).json({
+            return res.status(403).json({
                 success: false,
-                message: 'Not permitted'
+                message: 'Forbidden. You do not have permission to perform this action.'
             })
         }
         next()
@@ -46,13 +49,13 @@ const checkRole = (roles) => {
 const isDeleted = () => {
     return (req, res, next) => {
         if (req.user.isDeleted) {
-            return res.status(401).json({
+            return res.status(403).json({
                 success: false,
-                message: 'User has been deleted'
+                message: 'Account access denied. This user account has been deactivated.'
             })
         }
         next()
     }
 }
 
-export {VerifyJWT, checkRole, isDeleted}
+export { VerifyJWT, checkRole, isDeleted }

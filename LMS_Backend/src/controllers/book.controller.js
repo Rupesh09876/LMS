@@ -7,7 +7,7 @@ const addBook = async (req, res) => {
         if (!title || !author || !isbn || !quantity) {
             return res.status(400).json({
                 success: false,
-                message: 'All fields i.e. title, author, isbn and quantity must be filled out'
+                message: 'All required fields (title, author, ISBN, and quantity) must be provided.'
             })
         }
 
@@ -22,21 +22,21 @@ const addBook = async (req, res) => {
             available: quantity,
             bookImage: bookImage,
             rating,
-            description: description || 'No Description Given'
+            description: description || 'No description provided.'
         })
 
         await newBook.save()
 
         return res.status(201).json({
             success: true,
-            message: 'Book added successfully',
+            message: 'Book added successfully.',
             data: newBook
         })
 
     } catch (err) {
         return res.status(500).json({
             success: false,
-            message: 'cannot add book',
+            message: 'Failed to add book.',
             error: err.message
         })
     }
@@ -52,7 +52,7 @@ const getAllBook = async (req, res) => {
     }
     return res.status(200).json({
         success: true,
-        message: 'Books fetched successfully',
+        message: 'Books retrieved successfully.',
         data: books
     })
 }
@@ -64,24 +64,28 @@ const updateBook = async (req, res) => {
         const { title, author, isbn, quantity, description } = req.body
         const bookImage = req.file?.path
 
-        const updatedBook = await Book.findByIdAndUpdate(id, {title, author, isbn, quantity, available: quantity - book.length, bookImage, description}, {new: true, runValidators: true})
+        const updatedBook = await Book.findByIdAndUpdate(
+            id, 
+            {title, author, isbn, quantity, available: quantity - book.length, bookImage, description}, 
+            {new: true, runValidators: true}
+        )
 
         if (!updatedBook) {
             return res.status(404).json({
                 success: false,
-                message: 'Updating error: Book not found'
+                message: 'Update failed. Book not found.'
             })
         }
 
         return res.status(200).json({
             success: true,
-            message: 'Book updated successfully',
+            message: 'Book updated successfully.',
             data: updatedBook
         })
     } catch (err) {
         return res.status(500).json({
             success: false,
-            message: 'Serrver failed while updating book'
+            message: 'Server error while updating the book.'
         })
     }
 }
@@ -91,24 +95,23 @@ const deleteBook = async (req, res) => {
         const {id} = req.params
         const deleteBook = await Book.findByIdAndDelete(id)
         if (!deleteBook) {
-            return res.status(400).json({
+            return res.status(404).json({
                 success: false,
-                message: 'While deleting, ID not found'
+                message: 'Delete failed. Book ID not found.'
             })
         }
     
         return res.status(200).json({
             success: true,
-            message: 'Successfully Deleted'
+            message: 'Book deleted successfully.'
         })
     } catch (error) {
         return res.status(500).json({
             success: false,
-            message: 'Server failed while deleting book',
-            error: error.response.data
+            message: 'Server error while deleting the book.',
+            error: error.message
         })
     }
 }
-
 
 export {addBook, getAllBook, updateBook, deleteBook}
